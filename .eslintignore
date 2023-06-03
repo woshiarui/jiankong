@@ -5,3 +5,4 @@ node_modules
 test
 .gitignore
 .prettierignore
+commitlint.config.js
