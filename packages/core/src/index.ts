@@ -8,5 +8,5 @@
  * @LastEditTime: 2023-06-03 18:57:03
  */
 export function core() {
-    console.log('i am core')
+    console.log('i am core111')
 }
