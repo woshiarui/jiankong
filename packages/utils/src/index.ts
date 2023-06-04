@@ -7,6 +7,6 @@
  * @LastEditors: ZhengXiaoRui
  * @LastEditTime: 2023-06-03 18:57:03
  */
-export function utils() {
-    console.log('i am utils')
-}
+export * from './core/global'
+export * from './core/helpers'
+export * from './core/exception'
