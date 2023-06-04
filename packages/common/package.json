@@ -1,0 +1,17 @@
+{
+  "name": "@rmonitor/common",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "module": "dist/index.esm.js",
+  "main": "src/index.ts",
+  "publishConfig": {
+    "main": "dist/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
