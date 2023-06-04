@@ -7,6 +7,4 @@
  * @LastEditors: ZhengXiaoRui
  * @LastEditTime: 2023-06-03 19:33:35
  */
-export function types() {
-    console.log('i am types')
-}
+export * from './core/base'

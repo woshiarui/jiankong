@@ -102,15 +102,33 @@ importers:
 
   packages/common: {}
 
-  packages/core: {}
+  packages/core:
+    dependencies:
+      '@rmonitor/common':
+        specifier: workspace:^
+        version: link:../common
+      '@rmonitor/types':
+        specifier: workspace:^
+        version: link:../types
+      '@rmonitor/utils':
+        specifier: workspace:^
+        version: link:../utils
 
   packages/performance: {}
 
   packages/recordscreen: {}
 
-  packages/types: {}
+  packages/types:
+    dependencies:
+      '@rmonitor/common':
+        specifier: workspace:^
+        version: link:../common
 
-  packages/utils: {}
+  packages/utils:
+    dependencies:
+      '@rmonitor/types':
+        specifier: workspace:^
+        version: link:../types
 
 packages:
 
