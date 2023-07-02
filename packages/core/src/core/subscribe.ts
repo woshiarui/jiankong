@@ -1,16 +1,17 @@
-import { EVENT_TYPES } from "@rmonitor/common";
-import { ReplaceCallback, ReplaceHandler } from "@rmonitor/types";
-import { getFlag, setFlag } from "@rmonitor/utils";
-import { nativeTryCatch } from "@rmonitor/utils/src/core/exception";
 /*
- * @Descripttion: 
+ * @Descripttion: 发布订阅模式的实现
  * @version: 
  * @Author: ZhengXiaoRui
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 17:52:10
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-06-04 18:32:28
+ * @LastEditTime: 2023-07-02 20:51:54
  */
+import { EVENT_TYPES } from "@rmonitor/common";
+import { ReplaceCallback, ReplaceHandler } from "@rmonitor/types";
+import { getFlag, setFlag } from "@rmonitor/utils";
+import { nativeTryCatch } from "@rmonitor/utils/src/core/exception";
+
 const handlers: { [key in EVENT_TYPES]?: ReplaceCallback[] } = {}
 
 /**
@@ -33,7 +34,7 @@ export function subscribeEvent(handler: ReplaceHandler): boolean {
  * @returns 
  */
 export function notify(type: EVENT_TYPES, data?: any): void {
-    if(!type || !handlers[type])return
+    if (!type || !handlers[type]) return
     handlers[type]?.forEach(callback => {
         nativeTryCatch(() => {
             callback(data)

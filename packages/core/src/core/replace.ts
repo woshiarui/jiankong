@@ -1,7 +1,7 @@
-import { _global,replaceAop,getTimeStamp, on } from "@rmonitor/utils";
+import { _global, replaceAop, getTimeStamp, on } from "@rmonitor/utils";
 import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
-import {voidFun} from '@rmonitor/types'
-import { notify } from "./subscribe";
+import { ReplaceHandler, voidFun } from '@rmonitor/types'
+import { notify, subscribeEvent } from "./subscribe";
 
 /*
  * @Descripttion: 
@@ -10,7 +10,25 @@ import { notify } from "./subscribe";
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-06-04 18:38:25
+ * @LastEditTime: 2023-07-02 20:14:03
+ */
+
+function replace(type: EVENT_TYPES) {
+    switch (type) {
+        case EVENT_TYPES.XHR:
+            xhrReplace()
+    }
+}
+
+export function addReplaceHandler(handler: ReplaceHandler) {
+    if (!subscribeEvent(handler)) return
+    replace(handler.type)
+}
+
+
+/**
+ * 监听xhr
+ * @returns 
  */
 function xhrReplace(): void {
     if (!('XMLHttpRequest' in _global)) {
@@ -25,7 +43,7 @@ function xhrReplace(): void {
                 startTime: getTimeStamp(),
                 type: HTTPTYPE.XHR,
             }
-            originalOpen.apply(this,args)
+            originalOpen.apply(this, args)
         }
     })
     replaceAop(originalXhrProto, 'send', (originalSend: voidFun) => {
@@ -38,17 +56,17 @@ function xhrReplace(): void {
                 this.rmonitor_xhr.requestData = args[0]
                 const endTime = getTimeStamp()
                 this.rmonitor_xhr.time = this.rmonitor_xhr.startTime
-                this.rmonitor_xhr.status = status
+                this.rmonitor_xhr.Status = status //状态码
                 if (['', 'json', 'text'].indexOf(responseType) !== -1) {
                     //TODO: 用户设置
                     this.rmonitor_xhr.response = response && JSON.parse(response)
                 }
                 this.rmonitor_xhr.elapsedTime = endTime - this.rmonitor_xhr.startTime
                 //TODO: 执行回调
-                notify(EVENT_TYPES.XHR,this.rmonitor_xhr)
+                notify(EVENT_TYPES.XHR, this.rmonitor_xhr)
                 return
             })
-            originalSend.apply(this,args)
+            originalSend.apply(this, args)
         }
     })
 }
