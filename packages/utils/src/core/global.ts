@@ -7,19 +7,22 @@
  * @LastEditors: ZhengXiaoRui
  * @LastEditTime: 2023-06-04 18:28:28
  */
-import { Callback, RMonitor,Window } from "@rmonitor/types"
+import { Callback, RMonitor, Window } from "@rmonitor/types"
 
 //获取全局变量
-export function getGlobal(): Window{
+export function getGlobal(): Window {
     return window as unknown as Window
 }
 
 
 
-
+//全局变量
 const _global = getGlobal()
+
+//全局变量中的rmonitor
 const _support = getGlobalSupport()
 
+//标记是否被replace
 _support.replaceFlag = _support.replaceFlag || {}
 const replaceFlag = _support.replaceFlag
 
@@ -29,11 +32,11 @@ export function getGlobalSupport() {
 }
 
 export function getFlag(replaceType: string) {
-    return replaceFlag[replaceType] ? true: false
+    return replaceFlag[replaceType] ? true : false
 }
 
 export function setFlag(replaceType: string, isSet: boolean) {
-    if(replaceFlag[replaceType])return
+    if (replaceFlag[replaceType]) return
     replaceFlag[replaceType] = isSet
 }
 
