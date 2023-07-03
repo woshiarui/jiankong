@@ -10,7 +10,7 @@ import { notify, subscribeEvent } from "./subscribe";
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-03 23:52:49
+ * @LastEditTime: 2023-07-04 00:05:49
  */
 
 function replace(type: EVENT_TYPES) {
@@ -100,7 +100,9 @@ function fetchReplace(): void {
                     Status: tempRes.status,
                     time: startTime
                 })
-                tempRes.text().then(() => {
+                //TODO: 设置data
+                //text的方法是为了获取response对象中的主体内容
+                tempRes.text().then((data) => {
                     notify(EVENT_TYPES.FETCH, fetchData)
                 })
             }).catch((err) => {
