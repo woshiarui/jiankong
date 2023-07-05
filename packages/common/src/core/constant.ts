@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:51:21
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-02 20:36:15
+ * @LastEditTime: 2023-07-05 23:56:36
  */
 export enum HTTPTYPE {
     XHR = 'xhr',
@@ -22,7 +22,9 @@ export enum METHODS {
 export enum EVENT_TYPES {
     XHR = 'xhr',
     FETCH = 'fetch',
-    CLICK = 'click'
+    CLICK = 'click',
+    HASH_CHANGE = 'onhashchange',
+    HISTORY = 'history',
     //TODO: 待补充
 }
 
@@ -35,7 +37,6 @@ export enum HTTP_CODE {
     BAD_REQUEST = 400,
     UNAUTHORIZED = 401,
 }
-
 
 /**
 * 用户行为
