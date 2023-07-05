@@ -1,8 +1,3 @@
-import { _global, replaceAop, getTimeStamp, on } from "@rmonitor/utils";
-import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
-import { ReplaceHandler, voidFun } from '@rmonitor/types'
-import { notify, subscribeEvent } from "./subscribe";
-
 /*
  * @Descripttion: 
  * @version: 
@@ -10,13 +5,27 @@ import { notify, subscribeEvent } from "./subscribe";
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-04 00:05:49
+ * @LastEditTime: 2023-07-05 23:57:06
  */
+import { _global, replaceAop, getTimeStamp, on } from "@rmonitor/utils";
+import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
+import { ReplaceHandler, voidFun } from '@rmonitor/types'
+import { notify, subscribeEvent } from "./subscribe";
+import { isExistProperty } from "@rmonitor/utils/src/core/verifyType";
 
 function replace(type: EVENT_TYPES) {
     switch (type) {
         case EVENT_TYPES.XHR:
             xhrReplace()
+
+        case EVENT_TYPES.FETCH:
+            fetchReplace()
+
+        case EVENT_TYPES.HASH_CHANGE:
+            listenHashChange()
+
+        case EVENT_TYPES.HISTORY:
+            historyReplace()
     }
 }
 
@@ -27,7 +36,7 @@ export function addReplaceHandler(handler: ReplaceHandler) {
 
 
 /**
- * 监听xhr
+ * 重写xhr
  * @returns 
  */
 function xhrReplace(): void {
@@ -71,6 +80,10 @@ function xhrReplace(): void {
     })
 }
 
+/**
+ * 重写fetch
+ * @returns 
+ */
 function fetchReplace(): void {
     if (!('fetch' in _global)) return
     replaceAop(_global, EVENT_TYPES.FETCH, (originFetch) => {
@@ -117,4 +130,22 @@ function fetchReplace(): void {
             })
         }
     })
+}
+
+/**
+ * 监听hash
+ */
+function listenHashChange() {
+    if (isExistProperty(_global, 'onhashchange')) {
+        on(_global, EVENT_TYPES.HASH_CHANGE, function (e: HashChangeEvent) {
+            notify(EVENT_TYPES.HASH_CHANGE, e)
+        })
+    }
+}
+
+/**
+ * 重写history
+ */
+function historyReplace() {
+
 }
