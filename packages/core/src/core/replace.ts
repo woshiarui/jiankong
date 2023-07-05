@@ -1,8 +1,3 @@
-import { _global, replaceAop, getTimeStamp, on } from "@rmonitor/utils";
-import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
-import { ReplaceHandler, voidFun } from '@rmonitor/types'
-import { notify, subscribeEvent } from "./subscribe";
-
 /*
  * @Descripttion: 
  * @version: 
@@ -10,13 +5,27 @@ import { notify, subscribeEvent } from "./subscribe";
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-02 20:14:03
+ * @LastEditTime: 2023-07-05 23:57:06
  */
+import { _global, replaceAop, getTimeStamp, on } from "@rmonitor/utils";
+import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
+import { ReplaceHandler, voidFun } from '@rmonitor/types'
+import { notify, subscribeEvent } from "./subscribe";
+import { isExistProperty } from "@rmonitor/utils/src/core/verifyType";
 
 function replace(type: EVENT_TYPES) {
     switch (type) {
         case EVENT_TYPES.XHR:
             xhrReplace()
+
+        case EVENT_TYPES.FETCH:
+            fetchReplace()
+
+        case EVENT_TYPES.HASH_CHANGE:
+            listenHashChange()
+
+        case EVENT_TYPES.HISTORY:
+            historyReplace()
     }
 }
 
@@ -27,7 +36,7 @@ export function addReplaceHandler(handler: ReplaceHandler) {
 
 
 /**
- * 监听xhr
+ * 重写xhr
  * @returns 
  */
 function xhrReplace(): void {
@@ -69,4 +78,74 @@ function xhrReplace(): void {
             originalSend.apply(this, args)
         }
     })
+}
+
+/**
+ * 重写fetch
+ * @returns 
+ */
+function fetchReplace(): void {
+    if (!('fetch' in _global)) return
+    replaceAop(_global, EVENT_TYPES.FETCH, (originFetch) => {
+        return function (url, config: Partial<Request> = {}) {
+            const startTime = getTimeStamp()
+            const method = (config && config.method) || 'GET'
+            let fetchData = {
+                type: HTTPTYPE.FETCH,
+                method,
+                requestData: config && config.body,
+                url,
+                response: '',
+            }
+
+            //headers
+            const headers = new Headers(config.headers || {})
+            // TODO: why？
+            Object.assign(headers, {
+                setRequestHeader: headers.set
+            })
+            config = Object.assign({}, config, headers)
+            return originFetch.apply(_global, [url, config]).then((res) => {
+                const tempRes = res.clone()
+                const endTime = getTimeStamp()
+                fetchData = Object.assign({}, fetchData, {
+                    elapsedTime: endTime - startTime,
+                    Status: tempRes.status,
+                    time: startTime
+                })
+                //TODO: 设置data
+                //text的方法是为了获取response对象中的主体内容
+                tempRes.text().then((data) => {
+                    notify(EVENT_TYPES.FETCH, fetchData)
+                })
+            }).catch((err) => {
+                const endTime = getTimeStamp()
+                fetchData = Object.assign({}, fetchData, {
+                    elapsedTime: endTime - startTime,
+                    Status: 0,
+                    time: startTime
+                })
+                notify(EVENT_TYPES.FETCH, fetchData)
+                throw err; //抛出错误，等着被捕获
+            })
+        }
+    })
+}
+
+/**
+ * 监听hash
+ */
+function listenHashChange() {
+    if (isExistProperty(_global, 'onhashchange')) {
+        on(_global, EVENT_TYPES.HASH_CHANGE, function (e: HashChangeEvent) {
+            notify(EVENT_TYPES.HASH_CHANGE, e)
+        })
+    }
+}
+
+/**
+ * 重写history
+ */
+function historyReplace() {
+
 }
