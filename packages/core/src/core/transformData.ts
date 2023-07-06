@@ -1,4 +1,4 @@
-import { HTTP_CODE, STATUS_CODE } from "@rmonitor/common";
+import { HTTP_CODE, STATUS_CODE, STATUS_DESC } from "@rmonitor/common";
 import { HttpData } from "@rmonitor/types";
 
 //TODO： 增加HTTP状态码映射关系函数
@@ -23,7 +23,7 @@ export function httpTransform(data: HttpData): HttpData {
         //TODO: 需要继续判断返回的数据是否符合预期
     } else {
         status = STATUS_CODE.ERROR
-        message = `请求失败，Status值：${Status}`
+        message = `请求失败，Status值：${Status} ${STATUS_DESC[Status] || STATUS_DESC.UNKNOWN}`
     }
     return {
         url: data.url,
