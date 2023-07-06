@@ -5,9 +5,9 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-05 23:57:06
+ * @LastEditTime: 2023-07-07 00:28:43
  */
-import { _global, replaceAop, getTimeStamp, on } from "@rmonitor/utils";
+import { _global, replaceAop, getTimeStamp, on, getLocationHref } from "@rmonitor/utils";
 import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
 import { ReplaceHandler, voidFun } from '@rmonitor/types'
 import { notify, subscribeEvent } from "./subscribe";
@@ -17,15 +17,19 @@ function replace(type: EVENT_TYPES) {
     switch (type) {
         case EVENT_TYPES.XHR:
             xhrReplace()
-
+            break;
         case EVENT_TYPES.FETCH:
             fetchReplace()
-
+            break;
         case EVENT_TYPES.HASH_CHANGE:
             listenHashChange()
-
+            break;
         case EVENT_TYPES.HISTORY:
             historyReplace()
+            break;
+        case EVENT_TYPES.UNHANDLED_REJECTION:
+            unhandledrejectionReplace()
+            break;
     }
 }
 
@@ -146,6 +150,48 @@ function listenHashChange() {
 /**
  * 重写history
  */
+let lastHref = getLocationHref()
 function historyReplace() {
+    //TODO: 是否支持history
 
+    //onpopstate
+    const oldOnpopstate = _global.onpopstate
+    _global.onpopstate = function (this: any, ...args: any) {
+        const to = getLocationHref()
+        const from = lastHref
+        lastHref = to;
+        notify(EVENT_TYPES.HISTORY, {
+            from,
+            to
+        })
+        oldOnpopstate && oldOnpopstate.apply(this, args)
+    }
+    function historyReplaceFn(originalHistoryFn: voidFun) {
+        return function (this: any, ...args: any[]) {
+            const url = args.length > 2 ? args[2] : undefined
+            if (url) {
+                const from = lastHref
+                const to = String(url)
+                lastHref = to
+                notify(EVENT_TYPES.HISTORY, {
+                    from, to
+                })
+            }
+            return originalHistoryFn.apply(this, args)
+        }
+    }
+    // 重写核心事件 pushState、replaceState
+    replaceAop(_global.history, 'pushState', historyReplaceFn)
+    replaceAop(_global.history, 'replaceState', historyReplaceFn)
+}
+
+/**
+ * 监听unhandledrejection
+ */
+function unhandledrejectionReplace() {
+    on(_global, EVENT_TYPES.UNHANDLED_REJECTION, function (ev: PromiseRejectionEvent) {
+        //TODO： 支持配置
+        ev.preventDefault() //控制台不报错
+        notify(EVENT_TYPES.UNHANDLED_REJECTION, ev)
+    })
 }

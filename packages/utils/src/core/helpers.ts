@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:38:36
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-02 19:38:40
+ * @LastEditTime: 2023-07-07 00:06:44
  */
 import { AnyObject, Callback, } from "@rmonitor/types"
 
@@ -45,4 +45,8 @@ export function getTimeStamp(): number {
  */
 export function on(target: any, eventName: string, handler: Callback, options = false) {
     target.addEventListener(eventName, handler, options)
+}
+
+export function getLocationHref() {
+    return document?.location?.href || ''
 }
