@@ -38,6 +38,8 @@ export interface RMonitor {
 }
 
 export interface Window {
+  onpopstate: any;
+  history: any;
   _rMonitor: {
     [key: string]: any;
   };

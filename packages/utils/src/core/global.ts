@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:15:40
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-06-04 18:28:28
+ * @LastEditTime: 2023-07-07 00:10:59
  */
 import { Callback, RMonitor, Window } from "@rmonitor/types"
 

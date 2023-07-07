@@ -5,9 +5,10 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:38:36
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-02 19:38:40
+ * @LastEditTime: 2023-07-07 21:53:48
  */
 import { AnyObject, Callback, } from "@rmonitor/types"
+import { variableType } from "./verifyType"
 
 /**
  *
@@ -45,4 +46,26 @@ export function getTimeStamp(): number {
  */
 export function on(target: any, eventName: string, handler: Callback, options = false) {
     target.addEventListener(eventName, handler, options)
+}
+
+export function getLocationHref() {
+    return document?.location?.href || ''
+}
+
+export function unknownToString(target: unknown) {
+    if (variableType.isString(target)) return target as string
+    if (variableType.isUndefined(target)) return 'undefined'
+    return JSON.stringify(target)
+}
+
+export function throttle(fn: any, delay: number) {
+    let flag = true
+    return function (this, ...args) {
+        if (!flag) return
+        fn.apply(this, args)
+        flag = false
+        setTimeout(() => {
+            flag = true
+        }, delay)
+    }
 }
