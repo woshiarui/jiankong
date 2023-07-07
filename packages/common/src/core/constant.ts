@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:51:21
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-05 23:56:36
+ * @LastEditTime: 2023-07-07 00:24:31
  */
 export enum HTTPTYPE {
     XHR = 'xhr',
@@ -25,6 +25,7 @@ export enum EVENT_TYPES {
     CLICK = 'click',
     HASH_CHANGE = 'onhashchange',
     HISTORY = 'history',
+    UNHANDLED_REJECTION = 'unhandledrejection',
     //TODO: 待补充
 }
 
