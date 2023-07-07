@@ -9,7 +9,7 @@ import { HandleEvents } from "./handlerEvents"
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:38:39
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 00:28:14
+ * @LastEditTime: 2023-07-07 21:51:48
  */
 export function setupReplace(): void {
     //重写xhr，绑定回调
@@ -43,12 +43,19 @@ export function setupReplace(): void {
         },
         type: EVENT_TYPES.HASH_CHANGE
     })
-    //TODO: 待补充handle函数
+
     addReplaceHandler({
         callback: data => {
-            // HandleEvents.handleUnhandledRejection(data)
+            HandleEvents.handleUnhandleRejection(data)
         },
         type: EVENT_TYPES.HASH_CHANGE
+    })
+
+    addReplaceHandler({
+        callback: data => {
+            HandleEvents.handleClick(data)
+        },
+        type: EVENT_TYPES.CLICK
     })
 
 }

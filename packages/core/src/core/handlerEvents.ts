@@ -5,14 +5,15 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:40:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-05 23:56:54
+ * @LastEditTime: 2023-07-07 21:50:22
  */
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
 import { HttpData, RouteHistory } from "@rmonitor/types";
 import { httpTransform } from "./transformData";
 import { actionQueue } from "./actionQueue";
-import { parseUrlToObj } from "@rmonitor/utils/src/core/browser";
-import { getTimeStamp } from "@rmonitor/utils";
+import { htmlElementAsString, parseUrlToObj } from "@rmonitor/utils/src/core/browser";
+import { getTimeStamp, unknownToString } from "@rmonitor/utils";
+import ErrorStackParser from "error-stack-parser";
 
 export const HandleEvents = {
     handleHttp(data: HttpData, type: EVENT_TYPES): void {
@@ -60,5 +61,41 @@ export const HandleEvents = {
             time: getTimeStamp(),
             status: STATUS_CODE.OK
         })
+    },
+
+    handleUnhandleRejection(ev: PromiseRejectionEvent) {
+        const stackFrame = ErrorStackParser.parse(ev.reason)[0]
+        const { fileName, columnNumber, lineNumber } = stackFrame
+        const message = unknownToString(ev.reason.message || ev.reason.stack);
+        const data = {
+            type: EVENT_TYPES.UNHANDLED_REJECTION,
+            status: STATUS_CODE.ERROR,
+            time: getTimeStamp(),
+            message,
+            fileName,
+            line: lineNumber,
+            column: columnNumber
+        }
+        actionQueue.push({
+            type: EVENT_TYPES.UNHANDLED_REJECTION,
+            category: actionQueue.getCategory(EVENT_TYPES.UNHANDLED_REJECTION),
+            time: getTimeStamp(),
+            status: STATUS_CODE.ERROR,
+            data
+        })
+        //TODO: 上报数据
+    },
+
+    handleClick(data) {
+        const htmlString = htmlElementAsString(data.data.activeElement as HTMLElement)
+        if (htmlString) {
+            actionQueue.push({
+                type: EVENT_TYPES.CLICK,
+                status: STATUS_CODE.OK,
+                category: actionQueue.getCategory(EVENT_TYPES.CLICK),
+                data: htmlString,
+                time: getTimeStamp()
+            })
+        }
     }
 }

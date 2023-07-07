@@ -5,9 +5,9 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 00:28:43
+ * @LastEditTime: 2023-07-07 21:40:21
  */
-import { _global, replaceAop, getTimeStamp, on, getLocationHref } from "@rmonitor/utils";
+import { _global, replaceAop, getTimeStamp, on, getLocationHref, throttle } from "@rmonitor/utils";
 import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
 import { ReplaceHandler, voidFun } from '@rmonitor/types'
 import { notify, subscribeEvent } from "./subscribe";
@@ -29,6 +29,12 @@ function replace(type: EVENT_TYPES) {
             break;
         case EVENT_TYPES.UNHANDLED_REJECTION:
             unhandledrejectionReplace()
+            break;
+        case EVENT_TYPES.CLICK:
+            domReplace()
+            break
+
+        default:
             break;
     }
 }
@@ -194,4 +200,21 @@ function unhandledrejectionReplace() {
         ev.preventDefault() //控制台不报错
         notify(EVENT_TYPES.UNHANDLED_REJECTION, ev)
     })
+}
+
+function domReplace() {
+    if (!('document' in _global)) return
+    //节流
+    const clickThrottle = throttle(notify, 0.2)
+    on(
+        _global.document,
+        'click',
+        function (this) {
+            clickThrottle(EVENT_TYPES.CLICK, {
+                category: 'click',
+                data: this,
+            })
+        }
+        , true
+    )
 }
