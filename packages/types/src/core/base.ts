@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:19:02
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-05 23:50:20
+ * @LastEditTime: 2023-07-08 17:21:27
 */
 import { ACTION_TYPE, EVENT_TYPES, STATUS_CODE } from '@rmonitor/common'
 
@@ -73,4 +73,24 @@ export interface ActionQueueData {
 export interface RouteHistory {
   from: string,
   to: string
+}
+
+export interface ErrorTarget {
+  target?: {
+    localName?: string
+  }
+  error?: any
+  message?: string
+}
+
+export interface ResourceTarget {
+  src?: string;
+  href?: string;
+  localName?: string;
+}
+
+export interface ResourceError {
+  time: number;
+  message: string;// 加载失败信息
+  name: string; // 脚本类型，例如js脚本
 }
