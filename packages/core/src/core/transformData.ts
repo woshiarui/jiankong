@@ -1,5 +1,15 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhengXiaoRui
+ * @email: zheng20010712@163.com
+ * @Date: 2023-06-04 18:52:27
+ * @LastEditors: ZhengXiaoRui
+ * @LastEditTime: 2023-07-08 18:21:52
+ */
 import { HTTP_CODE, STATUS_CODE } from "@rmonitor/common";
-import { HttpData } from "@rmonitor/types";
+import { HttpData, ResourceError, ResourceTarget } from "@rmonitor/types";
+import { getTimeStamp, interceptStr } from "@rmonitor/utils";
 //TODO： 增加HTTP状态码映射关系函数
 export function httpTransform(data: HttpData): HttpData {
     let message: any = ''
@@ -38,5 +48,13 @@ export function httpTransform(data: HttpData): HttpData {
             Status,
             data: status === STATUS_CODE.ERROR ? response : null  //失败才需要返回信息，成功是符合预期的，则不需要返回数据，省流量。。
         }
+    }
+}
+
+export function resourceTransform(target: ResourceTarget): ResourceError {
+    return {
+        time: getTimeStamp(),
+        message: `${interceptStr(target.src as string, 100) || interceptStr(target.href as string, 100)}` + '__资源加载失败',
+        name: target.localName as string
     }
 }

@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:38:36
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 21:53:48
+ * @LastEditTime: 2023-07-08 18:20:20
  */
 import { AnyObject, Callback, } from "@rmonitor/types"
 import { variableType } from "./verifyType"
@@ -67,5 +67,13 @@ export function throttle(fn: any, delay: number) {
         setTimeout(() => {
             flag = true
         }, delay)
+    }
+}
+
+export function interceptStr(str: string, interceptLength: number) {
+    if (variableType.isString(str)) {
+        return (
+            str.slice(0, interceptLength) + (str.length > interceptLength ? `:截取签${interceptLength}个字符` : '')
+        )
     }
 }
