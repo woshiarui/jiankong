@@ -2,13 +2,14 @@
 
 import { Button, Form, Input } from 'antd'
 import axios from 'axios'
+import { MouseEventHandler } from 'react'
 export default function App() {
-  const sendRequest = async (url) => {
+  const sendRequest = async (url: string) => {
     const data = await axios.get(url)
     console.log(data)
   }
 
-  function onSubmit(values) {
+  function onSubmit(values: any) {
     sendRequest(values.url)
   }
 
