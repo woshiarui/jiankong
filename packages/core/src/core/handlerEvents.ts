@@ -5,11 +5,11 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:40:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 21:50:22
+ * @LastEditTime: 2023-07-08 19:10:58
  */
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
-import { HttpData, RouteHistory } from "@rmonitor/types";
-import { httpTransform } from "./transformData";
+import { ErrorTarget, HttpData, RouteHistory } from "@rmonitor/types";
+import { httpTransform, resourceTransform } from "./transformData";
 import { actionQueue } from "./actionQueue";
 import { htmlElementAsString, parseUrlToObj } from "@rmonitor/utils/src/core/browser";
 import { getTimeStamp, unknownToString } from "@rmonitor/utils";
@@ -18,7 +18,6 @@ import ErrorStackParser from "error-stack-parser";
 export const HandleEvents = {
     handleHttp(data: HttpData, type: EVENT_TYPES): void {
         const result = httpTransform(data)
-        //添加用户行为
         //需要判断options.dsn
         actionQueue.push({
             type,
@@ -96,6 +95,45 @@ export const HandleEvents = {
                 data: htmlString,
                 time: getTimeStamp()
             })
+        }
+    },
+
+    handleError(ev: ErrorTarget) {
+        const target = ev.target
+        // vue 和 react 捕获的报错用ev解析，异步错误用ev.error解析
+        if (!target || (ev.target && !ev.target.localName)) {
+            const stackFrame = ErrorStackParser.parse(!target ? ev : ev.error)[0]
+            const { fileName, columnNumber, lineNumber } = stackFrame
+            const errorData = {
+                type: EVENT_TYPES.ERROR,
+                status: STATUS_CODE.ERROR,
+                time: getTimeStamp(),
+                message: ev.message,
+                fileName,
+                line: lineNumber,
+                column: columnNumber
+            }
+            actionQueue.push({
+                type: EVENT_TYPES.ERROR,
+                category: actionQueue.getCategory(EVENT_TYPES.ERROR),
+                data: errorData,
+                time: getTimeStamp(),
+                status: STATUS_CODE.ERROR
+            })
+            //数据上报
+        }
+
+        // 资源加载错误
+        if (target?.localName) {
+            const data = resourceTransform(target)
+            actionQueue.push({
+                type: EVENT_TYPES.RESOURCE,
+                category: actionQueue.getCategory(EVENT_TYPES.RESOURCE),
+                status: STATUS_CODE.ERROR,
+                time: getTimeStamp(),
+                data
+            })
+            //上报数据
         }
     }
 }

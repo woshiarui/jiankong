@@ -9,7 +9,7 @@ import { _support, getTimeStamp } from "@rmonitor/utils";
  * @email: zheng20010712@163.com
  * @Date: 2023-07-02 20:32:06
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-02 20:51:15
+ * @LastEditTime: 2023-07-08 19:06:21
  */
 export class ActionQueue {
     maxLength = 30;//用户行为存储限制
@@ -28,6 +28,7 @@ export class ActionQueue {
             if (!result) return
             this.immediatePush(result)
         }
+        this.immediatePush(data)
     }
 
     immediatePush(data: ActionQueueData) {
@@ -62,6 +63,22 @@ export class ActionQueue {
 
             case EVENT_TYPES.CLICK:
                 return ACTION_TYPE.CLICK
+
+            case EVENT_TYPES.HISTORY:
+            case EVENT_TYPES.HASH_CHANGE:
+                return ACTION_TYPE.ROUTE
+
+            case EVENT_TYPES.UNHANDLED_REJECTION:
+            case EVENT_TYPES.ERROR:
+            case EVENT_TYPES.REACT:
+            case EVENT_TYPES.VUE:
+                return ACTION_TYPE.CODE_ERROR
+
+            case EVENT_TYPES.RESOURCE:
+                return ACTION_TYPE.RESOURCE
+
+            default:
+                return ACTION_TYPE.CUSTOM
         }
     }
 

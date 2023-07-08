@@ -1,8 +1,16 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhengXiaoRui
+ * @email: zheng20010712@163.com
+ * @Date: 2023-07-08 15:43:03
+ * @LastEditors: ZhengXiaoRui
+ * @LastEditTime: 2023-07-08 16:09:55
+ */
 'use client'
 
 import { Button, Form, Input } from 'antd'
 import axios from 'axios'
-import { MouseEventHandler } from 'react'
 export default function App() {
   const sendRequest = async (url: string) => {
     const data = await axios.get(url)
