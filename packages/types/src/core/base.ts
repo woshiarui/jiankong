@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:19:02
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 17:21:27
+ * @LastEditTime: 2023-07-10 23:04:21
 */
 import { ACTION_TYPE, EVENT_TYPES, STATUS_CODE } from '@rmonitor/common'
 
@@ -40,9 +40,12 @@ export interface RMonitor {
 export interface Window {
   onpopstate: any;
   history: any;
+  innerWidth: any;
+  innerHeight: any;
   _rMonitor: {
     [key: string]: any;
   };
+  addEventListener: any;
 }
 
 export interface Callback {

@@ -9,7 +9,7 @@ import { HandleEvents } from "./handlerEvents"
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:38:39
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 21:51:48
+ * @LastEditTime: 2023-07-10 23:25:40
  */
 export function setupReplace(): void {
     //重写xhr，绑定回调
@@ -58,4 +58,10 @@ export function setupReplace(): void {
         type: EVENT_TYPES.CLICK
     })
 
+    addReplaceHandler({
+        callback: () => {
+            HandleEvents.handleWhiteScreen()
+        },
+        type: EVENT_TYPES.WHITESCREEN
+    })
 }

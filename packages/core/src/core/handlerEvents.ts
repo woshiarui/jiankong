@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:40:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 19:10:58
+ * @LastEditTime: 2023-07-10 23:25:26
  */
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
 import { ErrorTarget, HttpData, RouteHistory } from "@rmonitor/types";
@@ -14,6 +14,8 @@ import { actionQueue } from "./actionQueue";
 import { htmlElementAsString, parseUrlToObj } from "@rmonitor/utils/src/core/browser";
 import { getTimeStamp, unknownToString } from "@rmonitor/utils";
 import ErrorStackParser from "error-stack-parser";
+import { openWhiteScreen } from "./whiteScreen";
+import { options } from "./option";
 
 export const HandleEvents = {
     handleHttp(data: HttpData, type: EVENT_TYPES): void {
@@ -135,5 +137,13 @@ export const HandleEvents = {
             })
             //上报数据
         }
+    },
+
+    //白屏
+    handleWhiteScreen() {
+        openWhiteScreen((res) => {
+            //上报白屏检测信息
+            console.log(res)
+        }, options)
     }
 }

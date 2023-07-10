@@ -18,6 +18,8 @@ export interface InitOptions {
     unhandledrejection?: boolean;
     hashchange?: boolean;
     history?: boolean;
+    skeletonProject?: boolean,  //是否有骨架屏
+    whiteBoxElements?: string[] //白屏检测的容器列表
 }
 
 export interface VueInstance {

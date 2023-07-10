@@ -29,7 +29,8 @@ export enum EVENT_TYPES {
     REACT = 'react',
     VUE = 'vue',
     ERROR = 'error',
-    RESOURCE = 'resource'
+    RESOURCE = 'resource',
+    WHITESCREEN = 'whitescreen'
     //TODO: 待补充
 }
 
