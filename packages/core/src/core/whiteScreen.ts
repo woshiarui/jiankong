@@ -5,12 +5,14 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-10 22:47:01
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-10 23:22:56
+ * @LastEditTime: 2023-07-12 22:23:20
  */
 import { STATUS_CODE } from "@rmonitor/common";
 import { Callback } from "@rmonitor/types";
 import { InitOptions } from "@rmonitor/types/src/core/option";
 import { _global, _support } from "@rmonitor/utils";
+
+//TODO： 超时打断
 
 export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxElements }: InitOptions) {
     let _whiteLoopNum = 0
@@ -103,7 +105,7 @@ export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxE
                 _skeletonNowList = []
             }
             idleCallback()
-        })
+        }, 1000)
     }
 
     function idleCallback() {

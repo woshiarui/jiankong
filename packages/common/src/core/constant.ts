@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:51:21
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 17:16:52
+ * @LastEditTime: 2023-07-12 22:30:48
  */
 export enum HTTPTYPE {
     XHR = 'xhr',
@@ -30,7 +30,8 @@ export enum EVENT_TYPES {
     VUE = 'vue',
     ERROR = 'error',
     RESOURCE = 'resource',
-    WHITESCREEN = 'whitescreen'
+    WHITESCREEN = 'whitescreen',
+    CUSTOM = 'custom'
     //TODO: 待补充
 }
 

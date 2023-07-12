@@ -5,6 +5,7 @@ import { EVENT_TYPES } from "@rmonitor/common";
 import { getFlag, nativeTryCatch, setFlag } from "@rmonitor/utils";
 import { HandleEvents } from "./core/handlerEvents";
 import { subscribeEvent } from "./core";
+import { log } from "./core/customLog";
 
 /*
  * @Descripttion: 
@@ -76,5 +77,6 @@ export default {
     init,
     install,
     errorBoundary,
-    use
+    use,
+    log
 }
