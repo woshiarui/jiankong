@@ -9,3 +9,5 @@
  */
 export * from './core/base'
 export * from './core/option'
+export * from './performance/FMP/base'
+export * from './performance/FMP/option'
