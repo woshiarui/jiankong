@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-08 16:47:30
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-17 23:49:29
+ * @LastEditTime: 2023-07-18 00:12:55
  */
 export interface InitOptions {
     dsn: string; // 上报地址
@@ -51,4 +51,8 @@ export interface ViewModel {
 export interface RecordScreenOption {
     recordScreenTypeList: string[]
     recordScreentime: number
+}
+
+export interface FMPOptions {
+    exact?: boolean
 }
