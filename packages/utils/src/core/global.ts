@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:15:40
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 00:10:59
+ * @LastEditTime: 2023-07-17 22:48:29
  */
 import { Callback, RMonitor, Window } from "@rmonitor/types"
 
@@ -13,6 +13,8 @@ import { Callback, RMonitor, Window } from "@rmonitor/types"
 export function getGlobal(): Window {
     return window as unknown as Window
 }
+
+export const isBrowserEnv = typeof window !== 'undefined' && Object.prototype.toString.call(window) === `[object Window]`
 
 
 

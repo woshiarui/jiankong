@@ -19,3 +19,16 @@ export const variableType = {
     isObject: isType('Object'),
     isArray: isType('Array')
 }
+
+export function isError(error: Error) {
+    switch (Object.prototype.toString.call(error)) {
+        case '[object Error]':
+            return true
+        case '[object Exception]':
+            return true
+        case '[object DOMException]':
+            return true
+        default:
+            return false
+    }
+}

@@ -13,5 +13,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@rmonitor/common": "workspace:^",
+    "@rmonitor/types": "workspace:^",
+    "@rmonitor/utils": "workspace:^",
+    "js-base64": "^3.7.5",
+    "pako": "^2.1.0"
+  }
 }

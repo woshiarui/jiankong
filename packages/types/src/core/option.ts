@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-08 16:47:30
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 18:58:15
+ * @LastEditTime: 2023-07-17 23:49:29
  */
 export interface InitOptions {
     dsn: string; // 上报地址
@@ -18,6 +18,8 @@ export interface InitOptions {
     unhandledrejection?: boolean;
     hashchange?: boolean;
     history?: boolean;
+    skeletonProject?: boolean,  //是否有骨架屏
+    whiteBoxElements?: string[] //白屏检测的容器列表
 }
 
 export interface VueInstance {
@@ -44,4 +46,9 @@ export interface ViewModel {
         props?: Record<string, any>;
     };
     $props?: Record<string, unknown>;
+}
+
+export interface RecordScreenOption {
+    recordScreenTypeList: string[]
+    recordScreentime: number
 }

@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:38:36
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 18:20:20
+ * @LastEditTime: 2023-07-17 22:57:09
  */
 import { AnyObject, Callback, } from "@rmonitor/types"
 import { variableType } from "./verifyType"
@@ -68,6 +68,16 @@ export function throttle(fn: any, delay: number) {
             flag = true
         }, delay)
     }
+}
+
+export function generateUUID(): string {
+    let d = new Date().getTime();
+    const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3) | 0x8).toString(16);
+    });
+    return uuid;
 }
 
 export function interceptStr(str: string, interceptLength: number) {
