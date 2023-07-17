@@ -1,11 +1,12 @@
 import { InitOptions, ViewModel, VueInstance } from "@rmonitor/types/src/core/option";
 import { setupReplace } from "./core/setupReplace";
-import { handleOptions } from "./core/option";
+import { handleOptions, options } from "./core/option";
 import { EVENT_TYPES } from "@rmonitor/common";
 import { getFlag, nativeTryCatch, setFlag } from "@rmonitor/utils";
 import { HandleEvents } from "./core/handlerEvents";
-import { subscribeEvent } from "./core";
+import { actionQueue, notify, subscribeEvent } from "./core";
 import { log } from "./core/customLog";
+import { transportData } from "./core/reportData";
 
 /*
  * @Descripttion: 
@@ -68,8 +69,7 @@ function use(plugin: any, option: any) {
         return
 
     nativeTryCatch(() => {
-        //TODO: 待设计
-        // instance.core()
+        instance.core({ transportData, actionQueue, options, notify });
     })
 }
 

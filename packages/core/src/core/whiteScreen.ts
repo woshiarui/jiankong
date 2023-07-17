@@ -5,19 +5,18 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-10 22:47:01
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-12 22:23:20
+ * @LastEditTime: 2023-07-17 23:07:26
  */
 import { STATUS_CODE } from "@rmonitor/common";
 import { Callback } from "@rmonitor/types";
 import { InitOptions } from "@rmonitor/types/src/core/option";
 import { _global, _support } from "@rmonitor/utils";
 
-//TODO： 超时打断
-
 export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxElements }: InitOptions) {
     let _whiteLoopNum = 0
     const _skeletonInitList: any[] = [] // 存储初次采样点
     let _skeletonNowList: any[] = [] //当前采样点
+    let overTime = +new Date() + 10000 //待配置
 
     //如果项目有骨架屏
     if (skeletonProject) {
@@ -100,6 +99,7 @@ export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxE
     function openWhiteLoop() {
         if (_support._loopTimer) return
         _support._loopTimer = setInterval(() => {
+            if (+new Date() > overTime) _support._loopTimer && clearInterval(_support._loopTimer)
             if (skeletonProject) {
                 _whiteLoopNum++
                 _skeletonNowList = []
@@ -109,6 +109,8 @@ export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxE
     }
 
     function idleCallback() {
+        //轮询超时
+        if (+new Date() > overTime) return
         if ('requestIdleCallback' in _global) {
             requestIdleCallback(deadline => {
                 //timeRemaining: 表示当前空闲时间的剩余时间

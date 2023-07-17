@@ -31,7 +31,8 @@ export enum EVENT_TYPES {
     ERROR = 'error',
     RESOURCE = 'resource',
     WHITESCREEN = 'whitescreen',
-    CUSTOM = 'custom'
+    CUSTOM = 'custom',
+    RECORDSCREEN = 'recordscreen'
     //TODO: 待补充
 }
 

@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:19:02
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-10 23:04:21
+ * @LastEditTime: 2023-07-17 23:54:09
 */
 import { ACTION_TYPE, EVENT_TYPES, STATUS_CODE } from '@rmonitor/common'
 
@@ -96,4 +96,48 @@ export interface ResourceError {
   time: number;
   message: string;// 加载失败信息
   name: string; // 脚本类型，例如js脚本
+}
+
+export interface RecordScreen {
+  recordScreenId: string; //录屏id
+  events: string; //录屏内容
+}
+
+
+export interface ReportData extends HttpData, ResourceError, RecordScreen {
+  type: string //事件类型
+  pageUrl: string; //页面地址
+  time: number; //发生时间
+  uuid: string; //页面唯一标识
+  apikey: string; //项目id
+  status: string; //事件状态
+  sdkVersion: string; //版本信息
+  actionStore?: ActionQueueData[] //用户行为数据
+
+  //设备信息
+  deviceInfo: {
+    browserVersion: string | number // 版本号
+    browser: string; //Chrome
+    osVersion: string | number // 电脑系统 win10
+    os: string; //设备系统
+    ua: string; //设备详情
+    device: string; //设备种类描述
+    device_type: string //设备种类，例如pc
+  }
+}
+
+export interface SdkBase {
+  transportData: any; //数据上报
+  actionQueue: any;//用户行为
+  options: any;//公共配置
+  notify: any //发布消息
+}
+
+export abstract class BasePlugin {
+  public type: string //插件类型
+  constructor(type: string) {
+    this.type = type
+  }
+  abstract core(SdkBase: SdkBase): void;//核心方法
+  abstract transform(data: any): void //数据转化
 }
