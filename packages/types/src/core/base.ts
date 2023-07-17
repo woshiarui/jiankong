@@ -141,3 +141,12 @@ export abstract class BasePlugin {
   abstract core(SdkBase: SdkBase): void;//核心方法
   abstract transform(data: any): void //数据转化
 }
+
+export interface FMPRecodeData {
+  time: number
+  domScore: number
+}
+
+export type HTMLElementWithCss = HTMLElement & {
+  readonly style?: CSSStyleDeclaration
+}
