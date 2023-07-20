@@ -53,7 +53,6 @@ export const createFMPMonitor = (options: FMPOptions) => {
     //   eventType: EventType.FMP
     // })
     if(window.Worker){
-
       const worker = new Worker(worker_script)
       worker.postMessage({scoredData})
       worker.onmessage = function(e) {
