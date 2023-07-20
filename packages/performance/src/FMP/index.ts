@@ -1,7 +1,16 @@
-import { FMPOptions, FMPRecodeData } from '@rmonitor/types'
-import { calculateFMP } from './calculateFMP'
-import { throttleRequestAnimationFrame } from './throttleRequestAnimationFrame'
-import { getDomLayoutScore } from './getDomLayoutScore'
+import { calculateFMP } from './utils/calculateFMP';
+import { throttleRequestAnimationFrame } from './utils/throttleRequestAnimationFrame'
+import { getDomLayoutScore } from './utils/getDomLayoutScore'
+import worker_script from './webworker'
+
+export interface FMPRecodeData {
+  time: number;
+  domScore: number;
+}
+
+interface FMPOptions {
+  exact?: boolean
+}
 
 export const createFMPMonitor = (options: FMPOptions) => {
   const MutationObserver = window.MutationObserver
@@ -43,7 +52,17 @@ export const createFMPMonitor = (options: FMPOptions) => {
     //   },
     //   eventType: EventType.FMP
     // })
-    console.log(`FMP:${calculateFMP(scoredData).time}ms`)
+    if(window.Worker){
+
+      const worker = new Worker(worker_script)
+      worker.postMessage({scoredData})
+      worker.onmessage = function(e) {
+        console.log(`FMP:${e.data.time}ms`)
+        worker.terminate()
+      }
+    } else {
+      console.log(`FMP:${calculateFMP(scoredData)}ms`)
+    }
     observer.disconnect()
   }
 
