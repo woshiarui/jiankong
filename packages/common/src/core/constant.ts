@@ -1,6 +1,6 @@
 /*
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: ZhengXiaoRui
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:51:21
@@ -31,8 +31,9 @@ export enum EVENT_TYPES {
     ERROR = 'error',
     RESOURCE = 'resource',
     WHITESCREEN = 'whitescreen',
-    CUSTOM = 'custom'
+    CUSTOM = 'custom',
     //TODO: 待补充
+    PERFORMANCE='performance'
 }
 
 export enum STATUS_CODE {
