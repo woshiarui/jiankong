@@ -5,11 +5,12 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:52:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 18:21:52
+ * @LastEditTime: 2023-07-22 11:41:26
  */
 import { HTTP_CODE, STATUS_CODE } from "@rmonitor/common";
 import { HttpData, ResourceError, ResourceTarget } from "@rmonitor/types";
 import { getTimeStamp, interceptStr } from "@rmonitor/utils";
+import { options } from "./option";
 //TODO： 增加HTTP状态码映射关系函数
 export function httpTransform(data: HttpData): HttpData {
     let message: any = ''
@@ -25,14 +26,22 @@ export function httpTransform(data: HttpData): HttpData {
     if (Status === 0) {
         status = STATUS_CODE.ERROR
         // TODO: 性能数据获取，存储到options中
-        // message = elapsedTime <= options.overTime * 1000 ? `请求失败，Status值：${Status}` : '请求失败，接口超时'  
+        message = elapsedTime <= options.overTime * 1000 ? `请求失败，Status值为：${Status}` : "请求失败，接口超时"
     } else if ((Status as number) < HTTP_CODE.BAD_REQUEST) {
         status = STATUS_CODE.OK
-        //TODO: 需要继续判断返回的数据是否符合预期
+        if (options.handleHttpStatus && typeof options.handleHttpStatus === 'function') {
+            if (options.handleHttpStatus(data)) {
+                status === STATUS_CODE.OK
+            } else {
+                status = STATUS_CODE.ERROR
+                message = `接口报错，报错信息为：${typeof response == 'object' ? JSON.stringify(response) : response}`
+            }
+        }
     } else {
         status = STATUS_CODE.ERROR
         message = `请求失败，Status值：${Status}`
     }
+    message = `${data.url}----${message}`
     return {
         url: data.url,
         time,

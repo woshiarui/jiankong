@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 21:40:21
+ * @LastEditTime: 2023-07-22 11:25:40
  */
 import { _global, replaceAop, getTimeStamp, on, getLocationHref, throttle } from "@rmonitor/utils";
 import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
@@ -33,7 +33,12 @@ function replace(type: EVENT_TYPES) {
         case EVENT_TYPES.CLICK:
             domReplace()
             break
-
+        case EVENT_TYPES.RECORDSCREEN:
+            whiteScreen()
+            break
+        case EVENT_TYPES.ERROR:
+            listenError()
+            break
         default:
             break;
     }
@@ -217,4 +222,15 @@ function domReplace() {
         }
         , true
     )
+}
+
+function listenError() {
+    on(_global, 'error', function (e: ErrorEvent) {
+        console.log(e)
+        notify(EVENT_TYPES.ERROR, e)
+    }, true)
+}
+
+function whiteScreen() {
+    notify(EVENT_TYPES.WHITESCREEN)
 }

@@ -5,31 +5,37 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:40:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-10 23:25:26
+ * @LastEditTime: 2023-07-22 11:44:43
  */
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
 import { ErrorTarget, HttpData, RouteHistory } from "@rmonitor/types";
 import { httpTransform, resourceTransform } from "./transformData";
 import { actionQueue } from "./actionQueue";
-import { htmlElementAsString, parseUrlToObj } from "@rmonitor/utils/src/core/browser";
+import { getErrorUid, hashMapExist, htmlElementAsString, parseUrlToObj } from "@rmonitor/utils/src/core/browser";
 import { getTimeStamp, unknownToString } from "@rmonitor/utils";
 import ErrorStackParser from "error-stack-parser";
 import { openWhiteScreen } from "./whiteScreen";
 import { options } from "./option";
+import { transportData } from "./reportData";
 
 export const HandleEvents = {
     handleHttp(data: HttpData, type: EVENT_TYPES): void {
         const result = httpTransform(data)
-        //需要判断options.dsn
-        actionQueue.push({
-            type,
-            category: actionQueue.getCategory(type),//行为类型 click、http error、code error等等
-            status: result.status,//行为状态 成功or失败
-            time: result.time,
-            data: result
-        })
+        //需要判断options.dsn,排除掉自身上报的接口行为
+        if (!data.url.includes(options.dsn)) {
+            actionQueue.push({
+                type,
+                category: actionQueue.getCategory(type),//行为类型 click、http error、code error等等
+                status: result.status,//行为状态 成功or失败
+                time: result.time,
+                data: result
+            })
+        }
+
         if (result.status === 'error') {
-            //TODO：数据上报
+            transportData.send({
+                type, status: STATUS_CODE.ERROR, ...result
+            })
         }
     },
 
@@ -84,7 +90,13 @@ export const HandleEvents = {
             status: STATUS_CODE.ERROR,
             data
         })
-        //TODO: 上报数据
+        //数据上报
+        const hash: string = getErrorUid(
+            `${EVENT_TYPES.ERROR}-${message}-${fileName}-${columnNumber}`
+        );
+        if (!options.repeatCodeError || (options.repeatCodeError && !hashMapExist(hash))) {
+            return transportData.send(data);
+        }
     },
 
     handleClick(data) {
@@ -123,6 +135,12 @@ export const HandleEvents = {
                 status: STATUS_CODE.ERROR
             })
             //数据上报
+            const hash: string = getErrorUid(
+                `${EVENT_TYPES.ERROR}-${ev.message}-${fileName}-${columnNumber}`
+            );
+            if (!options.repeatCodeError || (options.repeatCodeError && !hashMapExist(hash))) {
+                return transportData.send(errorData);
+            }
         }
 
         // 资源加载错误
@@ -136,6 +154,12 @@ export const HandleEvents = {
                 data
             })
             //上报数据
+            transportData.send({
+                type: EVENT_TYPES.RESOURCE,
+                status: STATUS_CODE.ERROR,
+                ...data
+            })
+            return
         }
     },
 

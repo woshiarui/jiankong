@@ -1,19 +1,19 @@
-import { ReportData } from "@rmonitor/types";
-import { Queue } from "../../../utils/src/core/queue";
-import { _support, generateUUID, getLocationHref, isBrowserEnv } from "@rmonitor/utils";
-import { EVENT_TYPES } from "@rmonitor/common";
-import { actionQueue } from "./actionQueue";
-import { options } from "./option";
-
 /*
  * @Descripttion: 
  * @version: 
  * @Author: ZhengXiaoRui
  * @email: zheng20010712@163.com
- * @Date: 2023-07-13 21:22:05
+ * @Date: 2023-07-21 21:52:08
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-17 23:53:10
+ * @LastEditTime: 2023-07-22 11:45:17
  */
+import { InitOptions, ReportData } from "@rmonitor/types";
+import { Queue } from "../../../utils/src/core/queue";
+import { _support, generateUUID, getLocationHref, isBrowserEnv, validateOption } from "@rmonitor/utils";
+import { EVENT_TYPES } from "@rmonitor/common";
+import { actionQueue } from "./actionQueue";
+import { options } from "./option";
+
 export class TransportData {
     queue: Queue = new Queue() //消息队列
     apikey = ''
@@ -107,6 +107,18 @@ export class TransportData {
             isSdkDsn = true
         }
         return isSdkDsn
+    }
+
+    bindOptions(options: InitOptions) {
+        const { dsn, apikey, beforeDataReport, userId, getUserId, useImgUpload } = options
+        validateOption(apikey, 'apikey', 'string') && (this.apikey = apikey);
+        validateOption(dsn, 'dsn', 'string') && (this.errorDsn = dsn);
+        validateOption(userId, 'userId', 'string') && (this.userId = userId || '');
+        validateOption(useImgUpload, 'useImgUpload', 'boolean') &&
+            (this.useImgUpload = useImgUpload || false);
+        validateOption(beforeDataReport, 'beforeDataReport', 'function') &&
+            (this.beforeDataReport = beforeDataReport);
+        validateOption(getUserId, 'getUserId', 'function') && (this.getUserId = getUserId);
     }
 
     async send(data: ReportData) {

@@ -1,3 +1,5 @@
+import { _support } from "./global";
+
 /*
  * @Descripttion: 
  * @version: 
@@ -5,7 +7,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-05 23:35:37
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-07 21:50:02
+ * @LastEditTime: 2023-07-22 10:59:21
  */
 export function parseUrlToObj(url: string) {
     if (!url) return {}
@@ -38,4 +40,17 @@ export function htmlElementAsString(target: HTMLElement) {
     const id = target.id ? `id='${target.id}'` : ''
     const innerText = target.innerText
     return `<${tagName} ${id} ${classNames}>${innerText}</${tagName}>`
+}
+
+// 对错误生成一个唯一的hash
+export function getErrorUid(input: string) {
+    return window.btoa(encodeURIComponent(input))
+}
+
+export function hashMapExist(hash: string): boolean {
+    const exist = _support.errorMap.has(hash)
+    if (!exist) {
+        _support.errorMap.set(hash, true)
+    }
+    return exist
 }
