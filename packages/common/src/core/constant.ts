@@ -1,11 +1,11 @@
 /*
- * @Descripttion: 
- * @version: 
+ * @Descripttion:
+ * @version:
  * @Author: ZhengXiaoRui
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:51:21
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-12 22:30:48
+ * @LastEditTime: 2023-07-22 09:55:41
  */
 export enum HTTPTYPE {
     XHR = 'xhr',
@@ -34,6 +34,7 @@ export enum EVENT_TYPES {
     CUSTOM = 'custom',
     RECORDSCREEN = 'recordscreen'
     //TODO: 待补充
+    PERFORMANCE = 'performance'
 }
 
 export enum STATUS_CODE {
