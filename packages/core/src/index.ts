@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhengXiaoRui
+ * @email: zheng20010712@163.com
+ * @Date: 2023-07-21 21:52:08
+ * @LastEditors: ZhengXiaoRui
+ * @LastEditTime: 2023-07-22 11:43:35
+ */
 import { InitOptions, ViewModel, VueInstance } from "@rmonitor/types/src/core/option";
 import { setupReplace } from "./core/setupReplace";
 import { handleOptions, options } from "./core/option";
@@ -8,15 +17,6 @@ import { actionQueue, notify, subscribeEvent } from "./core";
 import { log } from "./core/customLog";
 import { transportData } from "./core/reportData";
 
-/*
- * @Descripttion: 
- * @version: 
- * @Author: ZhengXiaoRui
- * @email: zheng20010712@163.com
- * @Date: 2023-06-03 18:55:54
- * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 18:47:41
- */
 function init(options: InitOptions) {
     if (!options.dsn || !options.id) {
         return console.error(`RMonitor 缺少配置项：${!options.dsn ? 'dns(上报地址)' : ''} ${!options.id ? 'id(项目id)' : ''}`)
@@ -24,12 +24,10 @@ function init(options: InitOptions) {
     //关闭监控
     if (!options.disable) return
 
-    //配置项待后续补充
     handleOptions(options)
     setupReplace();
 }
 
-//TODO: 适配Vue
 
 function install(Vue: VueInstance, options: InitOptions) {
     if (getFlag(EVENT_TYPES.VUE)) return

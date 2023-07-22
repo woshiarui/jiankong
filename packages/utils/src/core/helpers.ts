@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:38:36
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-17 22:57:09
+ * @LastEditTime: 2023-07-22 10:14:27
  */
 import { AnyObject, Callback, } from "@rmonitor/types"
 import { variableType } from "./verifyType"
@@ -86,4 +86,14 @@ export function interceptStr(str: string, interceptLength: number) {
             str.slice(0, interceptLength) + (str.length > interceptLength ? `:截取签${interceptLength}个字符` : '')
         )
     }
+}
+
+export function typeofAny(target: any) {
+    return Object.prototype.toString.call(target).slice(8, -1).toLowerCase()
+}
+
+export function validateOption(target: any, targetName: string, expectType: string) {
+    if (!target) return false
+    if (typeofAny(target) === expectType) return true
+    console.error(`RMonitor: ${targetName} 期待传入${expectType}类型,目前是${typeofAny(target)}类型,请修改`)
 }

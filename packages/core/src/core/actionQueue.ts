@@ -1,6 +1,6 @@
 import { ACTION_TYPE, EVENT_TYPES } from "@rmonitor/common";
-import { ActionQueueData } from "@rmonitor/types";
-import { _support, getTimeStamp } from "@rmonitor/utils";
+import { ActionQueueData, InitOptions } from "@rmonitor/types";
+import { _support, getTimeStamp, validateOption } from "@rmonitor/utils";
 
 /*
  * @Descripttion: 
@@ -9,7 +9,7 @@ import { _support, getTimeStamp } from "@rmonitor/utils";
  * @email: zheng20010712@163.com
  * @Date: 2023-07-02 20:32:06
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-08 19:06:21
+ * @LastEditTime: 2023-07-22 11:44:16
  */
 export class ActionQueue {
     maxLength = 30;//用户行为存储限制
@@ -54,35 +54,47 @@ export class ActionQueue {
         return this.queue
     }
 
-    //TODO: 待完善
     getCategory(type: EVENT_TYPES) {
         switch (type) {
+            // 接口请求
             case EVENT_TYPES.XHR:
             case EVENT_TYPES.FETCH:
                 return ACTION_TYPE.HTTP;
 
+            // 用户点击
             case EVENT_TYPES.CLICK:
                 return ACTION_TYPE.CLICK
 
+            // 路由变化
             case EVENT_TYPES.HISTORY:
             case EVENT_TYPES.HASH_CHANGE:
                 return ACTION_TYPE.ROUTE
 
+            // 代码错误
             case EVENT_TYPES.UNHANDLED_REJECTION:
             case EVENT_TYPES.ERROR:
             case EVENT_TYPES.REACT:
             case EVENT_TYPES.VUE:
                 return ACTION_TYPE.CODE_ERROR
 
+            // 加载资源
             case EVENT_TYPES.RESOURCE:
                 return ACTION_TYPE.RESOURCE
 
+            // 用户自定义内容
             default:
                 return ACTION_TYPE.CUSTOM
         }
     }
 
-    //TODO: bindOptions
+
+    bindOptions(options: InitOptions) {
+        const { maxActionQueueLength, beforePushActionStore } = options
+        validateOption(maxActionQueueLength, 'maxActionQueueLength', 'number') &&
+            (this.maxLength = maxActionQueueLength || 30)
+        validateOption(beforePushActionStore, 'beforePushActionStore', 'function') &&
+            (this.beforePushActionStore = beforePushActionStore)
+    }
 }
 
 //保证全局统一actionQueue

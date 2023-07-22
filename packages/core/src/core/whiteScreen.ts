@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-10 22:47:01
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-18 20:42:04
+ * @LastEditTime: 2023-07-22 11:42:17
  */
 import { STATUS_CODE } from "@rmonitor/common";
 import { Callback } from "@rmonitor/types";
@@ -36,14 +36,14 @@ import { _global, _support } from "@rmonitor/utils";
  * @param callback 
  * @param param1 
  */
-export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxElements }: InitOptions) {
+export function openWhiteScreen(callback: Callback, { isHasLoading, whiteBoxElements }: InitOptions) {
     let _whiteLoopNum = 0
     const _skeletonInitList: any[] = [] // 存储初次采样点
     let _skeletonNowList: any[] = [] //当前采样点
     let overTime = +new Date() + 10000 //待配置
 
     //如果项目有骨架屏
-    if (skeletonProject) {
+    if (isHasLoading) {
         if (document.readyState != 'complete') {
             idleCallback()
         }
@@ -72,7 +72,7 @@ export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxE
     //判断采样点是否为容器节点
     function isContainer(element: HTMLElement) {
         const selector = getSelector(element)
-        if (skeletonProject) {
+        if (isHasLoading) {
             _whiteLoopNum ? _skeletonNowList.push(selector) : _skeletonInitList.push(selector)
         }
         return whiteBoxElements?.indexOf(selector) != -1
@@ -93,7 +93,7 @@ export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxE
 
         //页面正常渲染，停止轮询
         if (emptyPoints !== 17) {
-            if (skeletonProject) {
+            if (isHasLoading) {
                 //第一次不比较
                 if (!_whiteLoopNum) return openWhiteLoop()
                 //比较前后dom是否一致
@@ -124,7 +124,7 @@ export function openWhiteScreen(callback: Callback, { skeletonProject, whiteBoxE
         if (_support._loopTimer) return
         _support._loopTimer = setInterval(() => {
             if (+new Date() > overTime) _support._loopTimer && clearInterval(_support._loopTimer)
-            if (skeletonProject) {
+            if (isHasLoading) {
                 _whiteLoopNum++
                 _skeletonNowList = []
             }

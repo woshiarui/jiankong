@@ -119,9 +119,15 @@ importers:
 
   packages/performance:
     dependencies:
+      '@rmonitor/common':
+        specifier: workspace:^
+        version: link:../common
       '@rmonitor/types':
         specifier: workspace:^
         version: link:../types
+      '@rmonitor/utils':
+        specifier: workspace:^
+        version: link:../utils
 
   packages/recordscreen:
     dependencies:
