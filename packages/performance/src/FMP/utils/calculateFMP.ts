@@ -1,4 +1,4 @@
-import { FMPRecodeData } from '@rmonitor/types'
+import { FMPRecodeData } from ".."
 
 export const calculateFMP = (scoredData: FMPRecodeData[]) => {
   // 首先将打分结果基于时间排序(时间戳从小到大)

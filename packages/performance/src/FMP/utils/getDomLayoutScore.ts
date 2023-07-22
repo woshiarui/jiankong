@@ -1,4 +1,6 @@
-import { HTMLElementWithCss } from '@rmonitor/types'
+type HTMLElementWithCss = HTMLElement & {
+  readonly style?: CSSStyleDeclaration;
+};
 
 // 需要忽略的功能性标签
 export const IGNORE_TAGS = ['SCRIPT', 'STYLE', 'META', 'HEAD']
@@ -18,7 +20,7 @@ export const getDomLayoutScore = (
   depth: number,
   isSiblingExists: boolean,
   exact: boolean = false
-) => {
+) : number => {
   const { tagName, children } = element
 
   if (!element || IGNORE_TAGS.includes(tagName)) {
