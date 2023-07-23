@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:51:21
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-22 09:55:41
+ * @LastEditTime: 2023-07-23 13:39:21
  */
 export enum HTTPTYPE {
     XHR = 'xhr',
@@ -32,9 +32,9 @@ export enum EVENT_TYPES {
     RESOURCE = 'resource',
     WHITESCREEN = 'whitescreen',
     CUSTOM = 'custom',
-    RECORDSCREEN = 'recordscreen'
-    //TODO: 待补充
-    PERFORMANCE = 'performance'
+    RECORDSCREEN = 'recordscreen',
+    PERFORMANCE = 'performance',
+    DOM = 'dom'
 }
 
 export enum STATUS_CODE {
