@@ -1,6 +1,6 @@
 import { EVENT_TYPES } from '@rmonitor/common';
 import { BasePlugin, SdkBase, RecordScreenOption } from '@rmonitor/types'
-import { _support, generateUUID } from '@rmonitor/utils';
+import { _support, generateUUID, validateOption } from '@rmonitor/utils';
 import { handleScreen } from './recordscreen';
 /*
  * @Descripttion: 
@@ -9,7 +9,7 @@ import { handleScreen } from './recordscreen';
  * @email: zheng20010712@163.com
  * @Date: 2023-06-03 18:55:54
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-17 23:58:12
+ * @LastEditTime: 2023-07-23 14:26:00
  */
 export default class RecordScreen extends BasePlugin {
     type: string;
@@ -39,5 +39,13 @@ export default class RecordScreen extends BasePlugin {
 
     transform(data: any): void {
         return data
+    }
+
+    bindOptions(params: RecordScreenOption) {
+        const { recordScreenTypeList, recordScreentime } = params;
+        validateOption(recordScreentime, 'recordScreentime', 'number') &&
+            (this.recordScreentime = recordScreentime);
+        validateOption(recordScreenTypeList, 'recordScreenTypeList', 'array') &&
+            (this.recordScreenTypeList = recordScreenTypeList);
     }
 }

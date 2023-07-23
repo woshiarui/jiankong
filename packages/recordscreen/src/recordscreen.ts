@@ -1,5 +1,14 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhengXiaoRui
+ * @email: zheng20010712@163.com
+ * @Date: 2023-07-21 21:52:08
+ * @LastEditors: ZhengXiaoRui
+ * @LastEditTime: 2023-07-23 14:25:48
+ */
 import { record } from 'rrweb';
-import pako from 'pako '
+import pako from 'pako'
 import { Base64 } from 'js-base64';
 import { generateUUID, _support, getTimeStamp } from '@rmonitor/utils';
 import { EVENT_TYPES, STATUS_CODE } from '@rmonitor/common'
