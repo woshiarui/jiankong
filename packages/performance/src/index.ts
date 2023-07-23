@@ -1,5 +1,5 @@
 import { _global, getTimeStamp, on } from "@rmonitor/utils";
-import { BasePlugin, SdkBase } from "../../types/src/core/base";
+import { BasePlugin, SdkBase } from "@rmonitor/types";
 import { EVENT_TYPES, STATUS_CODE } from '@rmonitor/common';
 import { getResource, getWebVitals } from "./core/performance";
 /*
@@ -9,7 +9,7 @@ import { getResource, getWebVitals } from "./core/performance";
  * @email: zheng20010712@163.com
  * @Date: 2023-06-03 18:55:54
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-23 14:08:22
+ * @LastEditTime: 2023-07-23 15:47:22
  */
 export default class WebPerformance extends BasePlugin {
     type: string;

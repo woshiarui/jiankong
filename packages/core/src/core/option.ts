@@ -7,7 +7,7 @@
  * @LastEditors: ZhengXiaoRui
  * @LastEditTime: 2023-07-22 11:44:55
  */
-import { InitOptions } from "@rmonitor/types/src/core/option";
+import { InitOptions } from "@rmonitor/types";
 import { _support, validateOption } from "@rmonitor/utils";
 import { actionQueue } from "./actionQueue";
 import { transportData } from "./reportData";

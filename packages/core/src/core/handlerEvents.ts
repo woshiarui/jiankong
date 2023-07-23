@@ -5,15 +5,14 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:40:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-22 11:44:43
+ * @LastEditTime: 2023-07-23 15:45:26
  */
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
 import { ErrorTarget, HttpData, RouteHistory } from "@rmonitor/types";
+import ErrorStackParser from "error-stack-parser";
+import { getErrorUid, hashMapExist, htmlElementAsString, parseUrlToObj, getTimeStamp, unknownToString } from "@rmonitor/utils";
 import { httpTransform, resourceTransform } from "./transformData";
 import { actionQueue } from "./actionQueue";
-import { getErrorUid, hashMapExist, htmlElementAsString, parseUrlToObj } from "@rmonitor/utils/src/core/browser";
-import { getTimeStamp, unknownToString } from "@rmonitor/utils";
-import ErrorStackParser from "error-stack-parser";
 import { openWhiteScreen } from "./whiteScreen";
 import { options } from "./option";
 import { transportData } from "./reportData";
