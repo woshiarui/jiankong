@@ -5,21 +5,16 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-21 21:52:08
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-22 11:43:35
+ * @LastEditTime: 2023-07-23 15:43:02
  */
-import { InitOptions, ViewModel, VueInstance } from "@rmonitor/types/src/core/option";
-import { setupReplace } from "./core/setupReplace";
-import { handleOptions, options } from "./core/option";
+import { InitOptions, ViewModel, VueInstance } from "@rmonitor/types";
 import { EVENT_TYPES } from "@rmonitor/common";
 import { getFlag, nativeTryCatch, setFlag } from "@rmonitor/utils";
-import { HandleEvents } from "./core/handlerEvents";
-import { actionQueue, notify, subscribeEvent } from "./core";
-import { log } from "./core/customLog";
-import { transportData } from "./core/reportData";
+import { actionQueue, notify, subscribeEvent, log, transportData, HandleEvents, handleOptions, options, setupReplace } from "./core";
 
 function init(options: InitOptions) {
-    if (!options.dsn || !options.id) {
-        return console.error(`RMonitor 缺少配置项：${!options.dsn ? 'dns(上报地址)' : ''} ${!options.id ? 'id(项目id)' : ''}`)
+    if (!options.dsn || !options.apikey) {
+        return console.error(`RMonitor 缺少配置项：${!options.dsn ? 'dns(上报地址)' : ''} ${!options.apikey ? 'id(项目id)' : ''}`)
     }
     //关闭监控
     if (!options.disable) return

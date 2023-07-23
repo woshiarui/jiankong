@@ -11,7 +11,7 @@ import { _global, replaceAop, getTimeStamp, on, getLocationHref, throttle } from
 import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
 import { ReplaceHandler, voidFun } from '@rmonitor/types'
 import { notify, subscribeEvent } from "./subscribe";
-import { isExistProperty } from "@rmonitor/utils/src/core/verifyType";
+import { isExistProperty } from "@rmonitor/utils";
 
 function replace(type: EVENT_TYPES) {
     switch (type) {

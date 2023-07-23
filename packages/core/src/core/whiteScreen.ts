@@ -8,8 +8,7 @@
  * @LastEditTime: 2023-07-22 11:42:17
  */
 import { STATUS_CODE } from "@rmonitor/common";
-import { Callback } from "@rmonitor/types";
-import { InitOptions } from "@rmonitor/types/src/core/option";
+import { Callback, InitOptions } from "@rmonitor/types";
 import { _global, _support } from "@rmonitor/utils";
 /**
  * 什么情况下会出现白屏？

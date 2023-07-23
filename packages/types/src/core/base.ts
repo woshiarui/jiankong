@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:19:02
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-17 23:54:09
+ * @LastEditTime: 2023-07-23 13:44:16
 */
 import { ACTION_TYPE, EVENT_TYPES, STATUS_CODE } from '@rmonitor/common'
 
@@ -138,6 +138,7 @@ export abstract class BasePlugin {
   constructor(type: string) {
     this.type = type
   }
+  abstract bindOptions(options: object): void //校验参数
   abstract core(SdkBase: SdkBase): void;//核心方法
   abstract transform(data: any): void //数据转化
 }

@@ -9,8 +9,7 @@
  */
 import { EVENT_TYPES } from "@rmonitor/common";
 import { ReplaceCallback, ReplaceHandler } from "@rmonitor/types";
-import { getFlag, setFlag } from "@rmonitor/utils";
-import { nativeTryCatch } from "@rmonitor/utils/src/core/exception";
+import { getFlag, setFlag, nativeTryCatch } from "@rmonitor/utils";
 
 const handlers: { [key in EVENT_TYPES]?: ReplaceCallback[] } = {}
 

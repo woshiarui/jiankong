@@ -5,11 +5,10 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-21 21:52:08
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-22 11:45:17
+ * @LastEditTime: 2023-07-23 15:46:27
  */
 import { InitOptions, ReportData } from "@rmonitor/types";
-import { Queue } from "../../../utils/src/core/queue";
-import { _support, generateUUID, getLocationHref, isBrowserEnv, validateOption } from "@rmonitor/utils";
+import { _support, generateUUID, getLocationHref, isBrowserEnv, validateOption, Queue } from "@rmonitor/utils";
 import { EVENT_TYPES } from "@rmonitor/common";
 import { actionQueue } from "./actionQueue";
 import { options } from "./option";
