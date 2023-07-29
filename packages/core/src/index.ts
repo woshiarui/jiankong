@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-21 21:52:08
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-23 15:43:02
+ * @LastEditTime: 2023-07-29 21:01:38
  */
 import { InitOptions, ViewModel, VueInstance } from "@rmonitor/types";
 import { EVENT_TYPES } from "@rmonitor/common";
@@ -17,7 +17,7 @@ function init(options: InitOptions) {
         return console.error(`RMonitor 缺少配置项：${!options.dsn ? 'dns(上报地址)' : ''} ${!options.apikey ? 'id(项目id)' : ''}`)
     }
     //关闭监控
-    if (!options.disable) return
+    if (options.disable) return
 
     handleOptions(options)
     setupReplace();
