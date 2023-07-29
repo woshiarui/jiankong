@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-18 00:10:03
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-23 15:27:39
+ * @LastEditTime: 2023-07-29 16:46:01
  */
 /* eslint-disable no-undef */
 import typescript from 'rollup-plugin-typescript2'
@@ -52,8 +52,7 @@ function output(path) {
           tsconfigOverride: {
             compilerOptions: {
               module: 'ESNext',
-              lib: ['es2016', 'dom'],
-              jsx: 'react'
+              lib: ['es2016', 'dom']
             }
           },
           useTsconfigDeclarationDir: true

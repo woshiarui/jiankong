@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 16:12:53
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-22 11:25:40
+ * @LastEditTime: 2023-07-29 16:51:50
  */
 import { _global, replaceAop, getTimeStamp, on, getLocationHref, throttle } from "@rmonitor/utils";
 import { EVENT_TYPES, HTTPTYPE } from "@rmonitor/common";
@@ -131,6 +131,7 @@ function fetchReplace(): void {
                 //TODO: 设置data
                 //text的方法是为了获取response对象中的主体内容
                 tempRes.text().then((data) => {
+                    console.log(data)
                     notify(EVENT_TYPES.FETCH, fetchData)
                 })
             }).catch((err) => {
