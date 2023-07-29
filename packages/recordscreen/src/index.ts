@@ -9,10 +9,9 @@ import { handleScreen } from './recordscreen';
  * @email: zheng20010712@163.com
  * @Date: 2023-06-03 18:55:54
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-23 14:26:00
+ * @LastEditTime: 2023-07-29 16:56:41
  */
 export default class RecordScreen extends BasePlugin {
-    type: string;
     recordScreentime = 10
     recordScreenTypeList: string[] = [
         EVENT_TYPES.ERROR,

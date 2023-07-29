@@ -5,11 +5,11 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-06-04 18:40:27
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-23 15:45:26
+ * @LastEditTime: 2023-07-29 16:50:10
  */
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
 import { ErrorTarget, HttpData, RouteHistory } from "@rmonitor/types";
-import ErrorStackParser from "error-stack-parser";
+import * as ErrorStackParser from "error-stack-parser";
 import { getErrorUid, hashMapExist, htmlElementAsString, parseUrlToObj, getTimeStamp, unknownToString } from "@rmonitor/utils";
 import { httpTransform, resourceTransform } from "./transformData";
 import { actionQueue } from "./actionQueue";
@@ -98,7 +98,7 @@ export const HandleEvents = {
         }
     },
 
-    handleClick(data) {
+    handleClick(data: any) {
         const htmlString = htmlElementAsString(data.data.activeElement as HTMLElement)
         if (htmlString) {
             actionQueue.push({

@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhengXiaoRui
+ * @email: zheng20010712@163.com
+ * @Date: 2023-07-29 16:09:19
+ * @LastEditors: ZhengXiaoRui
+ * @LastEditTime: 2023-07-29 16:53:17
+ */
 /**
  * 使用 request animation frame 调度某个回调函数
  */
@@ -6,13 +15,13 @@ export const throttleRequestAnimationFrame = (
   callback: FrameRequestCallback
 ) => {
   if (!window) {
-    return
+    return ''
   }
 
   const { requestAnimationFrame: raf, cancelAnimationFrame: caf } = window
 
   if (!(typeof raf === 'function') || !(typeof caf === 'function')) {
-    return
+    return ''
   }
 
   // raf 的返回值为非 0 数字

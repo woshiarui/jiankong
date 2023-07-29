@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-18 00:10:03
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-22 11:44:55
+ * @LastEditTime: 2023-07-29 16:50:33
  */
 import { InitOptions } from "@rmonitor/types";
 import { _support, validateOption } from "@rmonitor/utils";
@@ -20,9 +20,9 @@ export class Options {
     whiteBoxElements = ['html', 'body', '#app', '#root']; //白屏检测的容器列表
     isOpenWhiteScreen = false; //是否开启白屏检测
     isHasLoading = false; //项目是否有骨架屏
-    filterXhrUrlRegExp; //过滤接口请求的正则表达式
+    filterXhrUrlRegExp: any; //过滤接口请求的正则表达式
     repeatCodeError = false; //是否去除重复的代码错误,重复的错误只上报一次
-    handleHttpStatus; //处理接口返回的response
+    handleHttpStatus: any; //处理接口返回的response
     constructor() { }
     bindOptions(options: InitOptions) {
         const { dsn, filterXhrUrlRegExp, throttleDelayTime = 0, overTime = 10, isOpenWhiteScreen = false, whiteBoxElements = ['html', 'body', '#app', '#root'], isHasLoading = false, handleHttpStatus, repeatCodeError = false } = options
