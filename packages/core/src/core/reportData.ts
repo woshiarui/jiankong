@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-21 21:52:08
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-23 15:46:27
+ * @LastEditTime: 2023-07-29 16:52:10
  */
 import { InitOptions, ReportData } from "@rmonitor/types";
 import { _support, generateUUID, getLocationHref, isBrowserEnv, validateOption, Queue } from "@rmonitor/utils";
@@ -78,6 +78,7 @@ export class TransportData {
                 console.error(`RMonitor userId: ${id} 期望string 或 number类型，但是传入${typeof id}`)
             }
         }
+        return ''
     }
 
     //添加公共信息

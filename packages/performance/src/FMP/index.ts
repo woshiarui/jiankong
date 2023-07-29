@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhengXiaoRui
+ * @email: zheng20010712@163.com
+ * @Date: 2023-07-29 16:09:19
+ * @LastEditors: ZhengXiaoRui
+ * @LastEditTime: 2023-07-29 16:54:37
+ */
 import { calculateFMP } from './utils/calculateFMP';
 import { throttleRequestAnimationFrame } from './utils/throttleRequestAnimationFrame'
 import { getDomLayoutScore } from './utils/getDomLayoutScore'
@@ -32,7 +41,7 @@ export const createFMPMonitor = (options: FMPOptions) => {
     })
 
     const observer = new MutationObserver(() => {
-      callback?.runCallback()
+      if (callback) callback.runCallback()
     })
 
     observer.observe(document.body, {
@@ -52,10 +61,10 @@ export const createFMPMonitor = (options: FMPOptions) => {
     //   },
     //   eventType: EventType.FMP
     // })
-    if(window.Worker){
+    if (window.Worker) {
       const worker = new Worker(worker_script)
-      worker.postMessage({scoredData})
-      worker.onmessage = function(e) {
+      worker.postMessage({ scoredData })
+      worker.onmessage = function (e) {
         console.log(`FMP:${e.data.time}ms`)
         worker.terminate()
       }
@@ -66,7 +75,7 @@ export const createFMPMonitor = (options: FMPOptions) => {
   }
 
   // FMP 和 onload 事件并不密切相关，但它很可能在 onload 事件附近，所以我们延时一小段时间再报告
-  window.onload = () =>{
+  window.onload = () => {
     setTimeout(() => {
       reportData()
     }, 1000)

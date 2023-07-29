@@ -1,6 +1,6 @@
 import { EVENT_TYPES, STATUS_CODE } from "@rmonitor/common";
 import { getTimeStamp, nativeTryCatch, unknownToString, isError } from "@rmonitor/utils";
-import ErrorStackParser from "error-stack-parser";
+import * as ErrorStackParser from "error-stack-parser";
 import { actionQueue } from "./actionQueue";
 import { transportData } from "./reportData";
 
