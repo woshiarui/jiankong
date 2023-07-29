@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-29 16:09:19
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-29 16:54:37
+ * @LastEditTime: 2023-07-29 21:44:53
  */
 import { calculateFMP } from './utils/calculateFMP';
 import { throttleRequestAnimationFrame } from './utils/throttleRequestAnimationFrame'
@@ -27,7 +27,7 @@ export const createFMPMonitor = (options: FMPOptions) => {
   if (!MutationObserver) {
     return
   }
-  const startTime = Date.now()
+  const startTime = performance.timing.navigationStart
 
   const scoredData: FMPRecodeData[] = []
 
