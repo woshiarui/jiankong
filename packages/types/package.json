@@ -1,7 +1,8 @@
 {
   "name": "@rmonitor/types",
   "type": "module",
-  "version": "1.0.0",
+  "version": "2.1.1",
+  "private": false,
   "description": "",
   "main": "src/index.ts",
   "module": "dist/index.esm.js",
