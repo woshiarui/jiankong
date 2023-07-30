@@ -1,7 +1,7 @@
 {
   "name": "@rmonitor/performance",
   "type": "module",
-  "version": "1.0.0",
+  "version": "2.1.1",
   "description": "",
   "main": "src/index.ts",
   "module": "dist/index.esm.js",
