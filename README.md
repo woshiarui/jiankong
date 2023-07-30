@@ -33,25 +33,25 @@
 
 ### 功能展示
 
-（些许简陋）
+（些许简陋，视频存放在public下）
 
 错误捕获
 
 
 <video src="./public/errorCatch.mp4" controls loop>
-  你的浏览器不支持 <code>video</code> 标签。
+  你的浏览器不支持 <code>video</code> 标签，请直接查看public文件夹下的展示视频
 </video>
 
 性能数据
 
 <video src="./public/performance.mp4" controls loop>
-  你的浏览器不支持 <code>video</code> 标签。
+  你的浏览器不支持 <code>video</code> 标签，请直接查看public文件夹下的展示视频
 </video>
 
 录屏回放
 
 <video src="./public/errorReplay.mp4" controls loop>
-  你的浏览器不支持 <code>video</code> 标签。
+  你的浏览器不支持 <code>video</code> 标签，请直接查看public文件夹下的展示视频
 </video>
 
 
@@ -61,7 +61,7 @@
 
 **09-10：提供用户使用文档**
 
-**后续可能考虑提供数据可视化网站，支持监控报警功能等（反正随便想，也不一定能做哈哈哈）**
+后续可能考虑提供数据可视化网站，支持监控报警功能等（反正随便想，也不一定能做哈哈哈）
 
 ### 写一个监控系统的好处
 
