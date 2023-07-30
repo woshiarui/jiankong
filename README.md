@@ -5,7 +5,7 @@
  * @email: zheng20010712@163.com
  * @Date: 2023-07-29 16:09:19
  * @LastEditors: ZhengXiaoRui
- * @LastEditTime: 2023-07-30 18:08:51
+ * @LastEditTime: 2023-07-30 18:13:32
 -->
 # RMonitor
 
@@ -39,7 +39,7 @@
 
 ### 功能展示
 
-（些许简陋）
+（些许简陋，视频存放在public下）
 
 错误捕获
 
